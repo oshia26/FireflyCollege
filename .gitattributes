@@ -1,0 +1,9 @@
+# Normalize line endings: LF everywhere, except Windows batch files.
+* text=auto eol=lf
+
+*.bat text eol=crlf
+
+# Binary assets
+*.png binary
+*.jar binary
+*.apk binary

@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Android Studio / IntelliJ (project stays CLI-buildable)
+.idea/
+*.iml
+*.ipr
+*.iws
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Local machine config (SDK path, etc.)
+local.properties
+
+# Kotlin
+.kotlin/
+
+# Downloaded toolchain (JDK, Gradle distributions) — never committed
+tools/
+
+# OS cruft
+.DS_Store
+Thumbs.db
