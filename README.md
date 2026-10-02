@@ -25,14 +25,14 @@ while staying a serious, usable productivity app.
 - **Assignments** — title, description, course, deadline (date + time), priority,
   optional notes, completion toggle with through-line animation, delete with confirmation
 - **Deadline awareness** — every card shows a human countdown: *"due tomorrow"*, *"in 12h 30m"*, *"2 days overdue"*
+- **Calendar** — Monday-first month grid with course-colored deadline dots; tap any date to see that day's tasks
+- **Search** — live filtering across assignment titles, descriptions, notes and course names
 - **Local-first** — everything lives in an on-device Room database; no account, no server, no internet
 - **Dark mode** — night palette by default, follows system light/dark
 - Adaptive launcher icon drawn from the project logo
 
 **Roadmap (later stages):**
 
-- Calendar view (tap a date → that day's tasks)
-- Search across assignments and courses
 - Local deadline notifications via AlarmManager
 - Settings with theme toggle (DataStore)
 - JSON export/import backup

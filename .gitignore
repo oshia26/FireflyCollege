@@ -15,6 +15,9 @@ captures/
 # Local machine config (SDK path, etc.)
 local.properties
 
+# Command Code agent metadata (taste learning, plans)
+.commandcode/
+
 # Kotlin
 .kotlin/
 
