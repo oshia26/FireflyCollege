@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="FireflyCollege" width="560"/>
+  <img src="logo-wordmark.png" alt="FireflyCollege" width="560"/>
 </p>
 
 # FireflyCollege
