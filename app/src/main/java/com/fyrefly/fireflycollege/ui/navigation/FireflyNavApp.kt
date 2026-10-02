@@ -37,10 +37,12 @@ import com.fyrefly.fireflycollege.ui.screens.search.SearchScreen
 import com.fyrefly.fireflycollege.ui.screens.settings.SettingsScreen
 import com.fyrefly.fireflycollege.util.viewModelFactory
 import com.fyrefly.fireflycollege.viewmodel.AssignmentEditorViewModel
+import com.fyrefly.fireflycollege.viewmodel.CalendarViewModel
 import com.fyrefly.fireflycollege.viewmodel.CourseDetailViewModel
 import com.fyrefly.fireflycollege.viewmodel.CourseEditorViewModel
 import com.fyrefly.fireflycollege.viewmodel.CoursesViewModel
 import com.fyrefly.fireflycollege.viewmodel.DashboardViewModel
+import com.fyrefly.fireflycollege.viewmodel.SearchViewModel
 
 private data class Tab(val route: String, val label: String, val icon: ImageVector)
 
@@ -121,9 +123,21 @@ fun FireflyNavApp(app: FireflyApp) {
                 )
             }
 
-            composable(Routes.CALENDAR) { CalendarScreen() }
+            composable(Routes.CALENDAR) {
+                CalendarScreen(
+                    viewModel = viewModel(factory = viewModelFactory { CalendarViewModel(app.container) }),
+                    onOpenAssignment = { id -> navController.navigate(Routes.assignmentEditor(id, null)) }
+                )
+            }
             composable(Routes.SETTINGS) { SettingsScreen() }
-            composable(Routes.SEARCH) { SearchScreen(onBack = { navController.popBackStack() }) }
+            composable(Routes.SEARCH) {
+                SearchScreen(
+                    viewModel = viewModel(factory = viewModelFactory { SearchViewModel(app.container) }),
+                    onBack = { navController.popBackStack() },
+                    onOpenAssignment = { id -> navController.navigate(Routes.assignmentEditor(id, null)) },
+                    onOpenCourse = { id -> navController.navigate(Routes.courseDetail(id)) }
+                )
+            }
 
             composable(
                 route = Routes.COURSE_DETAIL,
