@@ -10,7 +10,9 @@ object CoursePalette {
         0xFFD1495B, // ember red
         0xFF2E9E8F, // lake teal
         0xFFB08968, // chestnut
-        0xFF6A8532 // deep leaf
+        0xFF6A8532, // deep leaf
+        0xFFB3446C, // rose
+        0xFF52796F // sage
     )
 
     /** Picks the least-used color for a new course given the existing ones. */

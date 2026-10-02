@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material.icons.rounded.Radio
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -74,7 +74,7 @@ fun AssignmentCard(
         ) {
             IconButton(onClick = onToggle, modifier = Modifier.size(30.dp)) {
                 Icon(
-                    imageVector = if (completed) Icons.Rounded.CheckCircleOutline else Icons.Rounded.Radio,
+                    imageVector = if (completed) Icons.Filled.CheckCircle else Icons.Filled.RadioButtonUnchecked,
                     contentDescription = if (completed) "Mark as not completed" else "Mark as completed",
                     tint = if (completed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(24.dp)
@@ -110,10 +110,11 @@ fun AssignmentCard(
                     )
                 }
                 if (!completed) {
-                    val countdown = TimeFormats.countdown(assignment.dueAt, now)
-                    if (countdown.startsWith("in ") && countdown != "in") {
+                    // Countdown line only adds value under a day out — the due label covers day-level info.
+                    val minutesLeft = (assignment.dueAt - now) / 60_000
+                    if (minutesLeft in 0..1440) {
                         Text(
-                            text = countdown,
+                            text = TimeFormats.countdown(assignment.dueAt, now),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.tertiary,
                             modifier = Modifier.padding(top = 2.dp)
