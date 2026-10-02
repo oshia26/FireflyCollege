@@ -1,5 +1,8 @@
 package com.fyrefly.fireflycollege.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Assignment(
     val id: Long = 0,
     val title: String,

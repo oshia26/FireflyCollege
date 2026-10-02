@@ -23,6 +23,12 @@ interface CourseDao {
     suspend fun getAll(): List<CourseEntity>
 
     @Insert
+    suspend fun insertAll(courses: List<CourseEntity>)
+
+    @Query("DELETE FROM courses")
+    suspend fun deleteAll()
+
+    @Insert
     suspend fun insert(course: CourseEntity): Long
 
     @Update

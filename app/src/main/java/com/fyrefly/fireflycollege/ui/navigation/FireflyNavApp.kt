@@ -43,6 +43,7 @@ import com.fyrefly.fireflycollege.viewmodel.CourseEditorViewModel
 import com.fyrefly.fireflycollege.viewmodel.CoursesViewModel
 import com.fyrefly.fireflycollege.viewmodel.DashboardViewModel
 import com.fyrefly.fireflycollege.viewmodel.SearchViewModel
+import com.fyrefly.fireflycollege.viewmodel.SettingsViewModel
 
 private data class Tab(val route: String, val label: String, val icon: ImageVector)
 
@@ -129,7 +130,11 @@ fun FireflyNavApp(app: FireflyApp) {
                     onOpenAssignment = { id -> navController.navigate(Routes.assignmentEditor(id, null)) }
                 )
             }
-            composable(Routes.SETTINGS) { SettingsScreen() }
+            composable(Routes.SETTINGS) {
+                SettingsScreen(
+                    viewModel = viewModel(factory = viewModelFactory { SettingsViewModel(app.container) })
+                )
+            }
             composable(Routes.SEARCH) {
                 SearchScreen(
                     viewModel = viewModel(factory = viewModelFactory { SearchViewModel(app.container) }),

@@ -1,5 +1,8 @@
 package com.fyrefly.fireflycollege.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class Priority { LOW, MEDIUM, HIGH }
 
 val Priority.label: String
