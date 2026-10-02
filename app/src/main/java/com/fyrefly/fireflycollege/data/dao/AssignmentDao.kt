@@ -26,6 +26,15 @@ interface AssignmentDao {
     @Query("SELECT * FROM assignments WHERE id = :id")
     suspend fun getById(id: Long): AssignmentEntity?
 
+    @Query("SELECT * FROM assignments ORDER BY dueAt ASC")
+    suspend fun getAll(): List<AssignmentEntity>
+
+    @Insert
+    suspend fun insertAll(assignments: List<AssignmentEntity>)
+
+    @Query("DELETE FROM assignments")
+    suspend fun deleteAll()
+
     @Insert
     suspend fun insert(assignment: AssignmentEntity): Long
 

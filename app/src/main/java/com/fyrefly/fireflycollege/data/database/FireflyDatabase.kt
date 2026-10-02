@@ -32,5 +32,13 @@ abstract class FireflyDatabase : RoomDatabase() {
 
     companion object {
         const val NAME = "fireflycollege.db"
+
+        /** One-shot instance for receivers/backup — open, use, close. */
+        fun create(context: android.content.Context): FireflyDatabase =
+            androidx.room.Room.databaseBuilder(
+                context.applicationContext,
+                FireflyDatabase::class.java,
+                NAME
+            ).build()
     }
 }

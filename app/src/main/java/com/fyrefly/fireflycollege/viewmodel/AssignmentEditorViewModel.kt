@@ -44,6 +44,7 @@ class AssignmentEditorViewModel(
 
     private val assignmentRepo = container.assignmentRepository
     private val courseRepo = container.courseRepository
+    private val coordinator = container.reminderCoordinator
 
     val courses: StateFlow<List<Course>> = courseRepo.observeAll()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
@@ -106,6 +107,7 @@ class AssignmentEditorViewModel(
                 completedAt = current.completedAt
             )
             assignmentRepo.save(assignment)
+            coordinator.refreshFor(assignment)
             _saved.value = true
         }
     }

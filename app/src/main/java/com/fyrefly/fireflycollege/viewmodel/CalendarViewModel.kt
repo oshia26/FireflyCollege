@@ -35,6 +35,7 @@ class CalendarViewModel(container: AppContainer) : ViewModel() {
 
     private val assignmentRepo = container.assignmentRepository
     private val courseRepo = container.courseRepository
+    private val coordinator = container.reminderCoordinator
 
     private val _month = MutableStateFlow(YearMonth.now())
     val month: StateFlow<YearMonth> = _month.asStateFlow()
@@ -83,11 +84,15 @@ class CalendarViewModel(container: AppContainer) : ViewModel() {
                 completedAt = if (!assignment.isCompleted) System.currentTimeMillis() else null
             )
             assignmentRepo.save(updated)
+            coordinator.refreshFor(updated)
         }
     }
 
     fun delete(assignment: Assignment) {
-        viewModelScope.launch { assignmentRepo.delete(assignment.id) }
+        viewModelScope.launch {
+            assignmentRepo.delete(assignment.id)
+            coordinator.cancelFor(assignment.id)
+        }
     }
 
     private fun buildState(

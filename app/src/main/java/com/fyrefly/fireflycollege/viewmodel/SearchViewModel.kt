@@ -27,6 +27,7 @@ class SearchViewModel(container: AppContainer) : ViewModel() {
 
     private val courseRepo = container.courseRepository
     private val assignmentRepo = container.assignmentRepository
+    private val coordinator = container.reminderCoordinator
 
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
@@ -76,10 +77,14 @@ class SearchViewModel(container: AppContainer) : ViewModel() {
                 completedAt = if (!assignment.isCompleted) System.currentTimeMillis() else null
             )
             assignmentRepo.save(updated)
+            coordinator.refreshFor(updated)
         }
     }
 
     fun delete(item: com.fyrefly.fireflycollege.data.model.AssignmentItem) {
-        viewModelScope.launch { assignmentRepo.delete(item.assignment.id) }
+        viewModelScope.launch {
+            assignmentRepo.delete(item.assignment.id)
+            coordinator.cancelFor(item.assignment.id)
+        }
     }
 }

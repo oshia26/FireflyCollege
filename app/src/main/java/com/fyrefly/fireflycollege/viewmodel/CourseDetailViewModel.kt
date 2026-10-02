@@ -19,6 +19,7 @@ class CourseDetailViewModel(
 
     private val courseRepo = container.courseRepository
     private val assignmentRepo = container.assignmentRepository
+    private val coordinator = container.reminderCoordinator
 
     val course: StateFlow<Course?> = courseRepo
         .observeById(courseId)
@@ -44,15 +45,20 @@ class CourseDetailViewModel(
                 completedAt = if (!assignment.isCompleted) System.currentTimeMillis() else null
             )
             assignmentRepo.save(updated)
+            coordinator.refreshFor(updated)
         }
     }
 
     fun delete(assignment: Assignment) {
-        viewModelScope.launch { assignmentRepo.delete(assignment.id) }
+        viewModelScope.launch {
+            assignmentRepo.delete(assignment.id)
+            coordinator.cancelFor(assignment.id)
+        }
     }
 
     fun deleteCourse(onDone: () -> Unit) {
         viewModelScope.launch {
+            assignments.value.forEach { coordinator.cancelFor(it.assignment.id) }
             course.value?.let { courseRepo.delete(it.id) }
             onDone()
         }

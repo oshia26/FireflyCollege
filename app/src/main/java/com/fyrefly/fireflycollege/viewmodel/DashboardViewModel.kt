@@ -30,6 +30,7 @@ class DashboardViewModel(container: AppContainer) : ViewModel() {
 
     private val assignmentsRepo = container.assignmentRepository
     private val courseRepo = container.courseRepository
+    private val coordinator = container.reminderCoordinator
 
     val state: StateFlow<DashboardUiState> = combine(
         assignmentsRepo.observeAll(),
@@ -49,11 +50,15 @@ class DashboardViewModel(container: AppContainer) : ViewModel() {
                 completedAt = if (!assignment.isCompleted) System.currentTimeMillis() else null
             )
             assignmentsRepo.save(updated)
+            coordinator.refreshFor(updated)
         }
     }
 
     fun delete(assignment: Assignment) {
-        viewModelScope.launch { assignmentsRepo.delete(assignment.id) }
+        viewModelScope.launch {
+            assignmentsRepo.delete(assignment.id)
+            coordinator.cancelFor(assignment.id)
+        }
     }
 
     private fun buildState(
